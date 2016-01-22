@@ -883,8 +883,8 @@ int PARSE_TREE::pass_bwd(){
 
             for( auto dvec_bmat: { pair_r, pair_c } ){
                 if( 
-                    doing_rec  && rae->mp.unsup ||
-                    ( ! doing_rec ) && rae->mp.sup
+                    ( doing_rec  && rae->mp.unsup ) ||
+                    ( ( ! doing_rec ) && rae->mp.sup )
                 ){
 
                     if( parent_is_left ){ 

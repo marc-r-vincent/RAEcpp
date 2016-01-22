@@ -10,7 +10,27 @@ project( RAE )
 # set path modify for you own configuration
 set( LBFGSDIR "${CMAKE_CURRENT_LIST_DIR}/../liblbfgs" )
 set( DLIBDIR "${CMAKE_CURRENT_LIST_DIR}/../dlib-18.18" )
-set( INCEIGEN "/usr/include/eigen3" )
+
+set( EIGEN_DIRS  "/usr/include/eigen3" "/opt/local/include/eigen3" )
+
+set( INCEIGEN "NOT-FOUND" )
+foreach( EDIR ${EIGEN_DIRS} )
+    message( "-- Searching eigen3 at ${EDIR}... ")
+    if( EXISTS ${EDIR} )
+        set( INCEIGEN ${EDIR} )
+        message( "-- Found.")
+        break()
+    else()
+        message( "-- Not found.")
+    endif()
+endforeach()
+
+if( ${INCEIGEN} MATCHES "NOT-FOUND" )
+    message( FATAL_ERROR "eigen3 was not found at any of the tested places, either install it or set the right path in the CMakeLists.txt file ( try: locate eigen3 )" )
+endif()
+
+message( "INCEIGEN=${INCEIGEN}" )
+
 set( GOOGDIR  "/usr/include/google" )
 
 # where to fetch libraries if need be
@@ -52,7 +72,7 @@ find_package( HDF5 REQUIRED )
 
 include_directories( "${HDF5_INCLUDE_DIR}" )
 include_directories( "${ARMADILLO_INCLUDE_DIRS}" )
-include_directories( "${INCEIGEN}" )
+include_directories( ${INCEIGEN} )
 include_directories( "src" )
 
 if( NOT USE_LIBLBFGS )
@@ -94,6 +114,7 @@ if( USE_LIBLBFGS )
         COMMAND
             cd ${LBFGSDIR} &&
             ./autogen.sh > ${CMAKE_CURRENT_LIST_DIR}/liblbfgs.log && 
+            autoreconf --force --install &&
             ./configure >> ${CMAKE_CURRENT_LIST_DIR}/liblbfgs.log &&
             make clean >> ${CMAKE_CURRENT_LIST_DIR}/liblbfgs.log &&
             make >> ${CMAKE_CURRENT_LIST_DIR}/liblbfgs.log &&
@@ -133,6 +154,7 @@ endif()
 if( "${CMAKE_VERSION}" VERSION_GREATER 3.0  )
     set( CXX_STANDARD_REQUIRED ON )
     set_property(TARGET run_rae PROPERTY CXX_STANDARD 11)
+    set( GCC_COVERAGE_COMPILE_FLAGS "-O2 -DARMA_USE_HDF5" )
 else()
     if( "${CMAKE_CXX_COMPILER_ID}" MATCHES "GNU" )
         execute_process(

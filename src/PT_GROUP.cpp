@@ -747,7 +747,7 @@ int PT_GROUP::lbfgs_progress(
     return 0;
 }
 
-int check_lbfgs_ret( uint ret ){
+int check_lbfgs_ret( int ret ){
 
     switch( ret )
     {

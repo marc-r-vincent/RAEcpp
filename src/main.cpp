@@ -268,6 +268,8 @@ int check_options_compat( model_params mp, opt_params op, uint n_out ){
             "Exiting..." << endl; exit(0);
     }
 
+    return( 0 );
+
 }
 
 int run_dataset( dataset ds_in, model_params mp, opt_params op,
