@@ -22,8 +22,8 @@ Relies on Armadillo for linear algebra, and runs on CPU. Mulithreading is availa
 
 Automatically saves training progress, best models and learned representations/embeddings of words and phrases.
 
-SPEED
------
+PERFORMANCE
+-----------
 
 On an 8 core i7-4710HQ / 2.50 GHz processor the adagrad example file runs for an average of 2-3 min depending on the random initialization of parameters ( ie. the optimization might take from 3 to 5 epochs to complete ). Using lbfgs with default settings is slower with a satisfactory model found around 80-100 epochs.
 
@@ -53,6 +53,8 @@ make # run make
 doxygen doxyset.dx # generate documentation using doxygen
 ```
 
+Should you have any trouble building libLBFGS you can edit the CMakeLists.txt file and set USE\_LIBLBFGS to OFF. If cmake warns that eigen3 is not found at the tested places -and you are sure you have installed it- you can edit the EIGEN\_DIRS list and add the path to your eigen3 installation.
+
 RUNNING
 -------
 
@@ -76,8 +78,8 @@ LICENSE
 -------
 
 Implementation of the  Recursive Auto Encoder model originally described by socher et al. in EMNLP 2011
-Copyright (C) 2015 Marc Vincent
-website: http://www.dsi.unifi.it/~vincent
+Copyright (C) 2015 Marc Vincent.
+Website: http://www.dsi.unifi.it/~vincent
 
 RAEcpp is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
