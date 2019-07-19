@@ -39,7 +39,7 @@ dlib relies on eigen3.
 
 To install the dependencies on different systems you can use:
 ```
-sudo apt-get install libarmadillo-dev libhdf5-7 libhdf5-dev libeigen3-dev wget # UBUNTU / apt
+sudo apt-get install libarmadillo-dev libhdf5-[0-9] libhdf5-dev libeigen3-dev wget # UBUNTU / apt
 sudo port install armadillo hdf5 eigen3 eigen3-devel wget # MACOSX / macports
 ```
 
